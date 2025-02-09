@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout'
 import { Navbar } from '../components/Navbar'
 import { Hero } from '../components/Hero'
 import { Footer } from '../components/Footer'
+import { SectionProjects } from '../components/SectionProjects'
 import { SectionPosts } from '../components/SectionPosts'
 
 function App(): JSX.Element {
@@ -14,6 +15,7 @@ function App(): JSX.Element {
       <Layout>
         <main className=' text-white dark:text-neutral-color-low-main bg-white dark:bg-neutral-color-low-dark flex flex-col gap-y-20 py-20'>
           <Hero />
+          <SectionProjects />
           <SectionPosts />
         </main>
       </Layout>
