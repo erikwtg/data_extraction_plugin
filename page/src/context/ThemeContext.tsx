@@ -29,7 +29,7 @@ export function ThemeContextProvider({ children }: { children: React.ReactNode }
     return storedNumberOfClicksInThemeButton ? parseInt(storedNumberOfClicksInThemeButton) : 0
   })
 
-  const [acessibilityMode, setAcessibilityMode] = useState(true)
+  const [acessibilityMode, setAcessibilityMode] = useState(false)
 
   useEffect(() => {
     if (theme === 'dark') {
