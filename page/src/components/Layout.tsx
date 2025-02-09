@@ -6,7 +6,7 @@ interface ILayoutProps {
 
 export function Layout({ children }: ILayoutProps) {
   return (
-    <div className='flex flex-col px-4 md:px-12 2xl:px-54 bg-white text-neutral-color-low-dark dark:bg-neutral-color-low-dark text-white'>
+    <div className='flex flex-col bg-white dark:bg-neutral-color-low-dark/90 dark:text-white'>
       { children }
     </div>
   )

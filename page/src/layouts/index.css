@@ -2,6 +2,8 @@
 @import "@fontsource/lato";
 @import "@fontsource/lato/700.css";
 
+@custom-variant dark (&:where(.opaque, .opaque *));
+
 @theme {
     --font-family-lato: "Lato", sans-serif;
     --font-family-lato-bold: "Lato Bold", sans-serif;
@@ -12,19 +14,23 @@
     --color-brand-color-primary-medium: #666666;
     --color-brand-color-primary-dark: #333333;
 
+    --color-brand-color-secundary-main: #F06F06;
     --color-brand-color-secundary-lightest: #FBC5A0;
     --color-brand-color-secundary-light: #FAAE4B;
     --color-brand-color-secundary-medium: #FB8C01;
     --color-brand-color-secundary-dark: #CC5E05;
 
     --color-neutral-color-low-main: #333333;
+    --color-neutral-color-low-lightest: #979797;
+    --color-neutral-color-low-light: #818181;
+    --color-neutral-color-low-medium: #666666;
     --color-neutral-color-low-dark: #000000;
 
     --color-highlight-color-main: #413987;
-    --color-highlight-color-primary-lightest: #E0E6F9;
-    --color-highlight-color-primary-light: #5B69C2;
-    --color-highlight-color-primary-medium: #542DC2;
-    --color-highlight-color-primary-dark: #121A5C;
+    --color-highlight-color-lightest: #E0E6F9;
+    --color-highlight-color-light: #5B69C2;
+    --color-highlight-color-medium: #542DC2;
+    --color-highlight-color-dark: #121A5C;
 
     --color-accessibility-color-main: #003087;
 

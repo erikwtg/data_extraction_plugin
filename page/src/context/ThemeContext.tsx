@@ -21,7 +21,7 @@ export function ThemeContextProvider({ children }: { children: React.ReactNode }
     const storedTheme = localStorage.getItem('theme')
     if (storedTheme) return storedTheme
   
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    return window.matchMedia("(prefers-color-scheme: opaque)").matches ? "opaque" : "light"
   })
 
   const [numberOfClicksInThemeButton, setNumberOfClicksInThemeButton] = useState(() => {
@@ -32,10 +32,10 @@ export function ThemeContextProvider({ children }: { children: React.ReactNode }
   const [acessibilityMode, setAcessibilityMode] = useState(false)
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add("dark");
+    if (theme === 'opaque') {
+      document.documentElement.classList.add("opaque");
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("opaque");
     }
 
     localStorage.setItem("theme", theme);
@@ -43,7 +43,7 @@ export function ThemeContextProvider({ children }: { children: React.ReactNode }
   }, [theme, numberOfClicksInThemeButton]);
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
+    setTheme(theme === 'light' ? 'opaque' : 'light')
     setNumberOfClicksInThemeButton(numberOfClicksInThemeButton + 1)
     localStorage.setItem('theme', theme)
     localStorage.setItem('storedNumberOfClicksInThemeButton', String(numberOfClicksInThemeButton + 1))
