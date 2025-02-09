@@ -1,6 +1,7 @@
 import { JSX } from 'react'
 import { Layout } from '../components/Layout'
 import { Navbar } from '../components/Navbar'
+import { Hero } from '../components/Hero'
 import { Footer } from '../components/Footer'
 
 function App(): JSX.Element {
@@ -10,8 +11,8 @@ function App(): JSX.Element {
         <Navbar />
       </header>
       <Layout>
-        <main>
-          <h1 className='dark:text-neutral-color-low-main min-h-screen'>Data Extraction Plugin</h1>
+        <main className=' text-white dark:text-neutral-color-low-main bg-white dark:bg-neutral-color-low-dark flex flex-col gap-y-20 py-20'>
+          <Hero />
         </main>
       </Layout>
       <Footer />

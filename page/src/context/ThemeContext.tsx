@@ -12,7 +12,7 @@ export const ThemeContextProviderContext = createContext<IThemeContextProviderCo
   theme: 'light',
   toggleTheme: () => {},
   numberOfClicksInThemeButton: 0,
-  acessibilityMode: true,
+  acessibilityMode: false,
   toggleAcessibilityMode: () => {},
 })
 
