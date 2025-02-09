@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@fontsource/lato";
+@import "@fontsource/lato/700.css";
+
+@theme {
+    --font-family-lato: "Lato", sans-serif;
+    --font-family-lato-bold: "Lato Bold", sans-serif;
+
+    --font-display-lato: "Lato Display", sans-serif;
+
+    --color-brand-color-primary-light:#C4C4C4;
+    --color-brand-color-primary-medium: #666666;
+    --color-brand-color-primary-dark: #333333;
+
+    --color-brand-color-secundary-lightest: #FBC5A0;
+    --color-brand-color-secundary-light: #FAAE4B;
+    --color-brand-color-secundary-medium: #FB8C01;
+    --color-brand-color-secundary-dark: #CC5E05;
+
+    --color-neutral-color-low-main: #333333;
+    --color-neutral-color-low-dark: #000000;
+
+    --color-highlight-color-main: #413987;
+    --color-highlight-color-primary-lightest: #E0E6F9;
+    --color-highlight-color-primary-light: #5B69C2;
+    --color-highlight-color-primary-medium: #542DC2;
+    --color-highlight-color-primary-dark: #121A5C;
+
+    --color-accessibility-color-main: #003087;
+
+    --font-size-xxxs: 12px;
+    --font-size-xxs: 14px;
+    --font-size-xs: 16px;
+    --font-size-sm: 20px;
+    --font-size-md: 24px;
+    --font-size-lg: 32px;
+
+    --gap-20: 72px;
+
+    --spacing-nano: 8px;
+    --spacing-xxxs: 12px;
+    --spacing-xxs: 16px;
+    --spacing-xs: 24px;
+    --spacing-sm: 32px;
+
+    --padding-nano: 8px;
+    --padding-xxxs: 12px;
+    --padding-xxs: 16px;
+    --padding-xs: 24px;
+    --padding-sm: 32px;
+
+    --border-radius-md: 12px;
+    --border-radius-xd: 22px;
+
+    --shadow-level-1: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
