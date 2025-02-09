@@ -8,6 +8,6 @@ interface IButtonProps {
 
 export function Button({ children, onClick, className = '' }: IButtonProps): JSX.Element {
   return (
-    <button className={`bg-brand-color-secundary-light/90 transition-colors hover:bg-brand-color-secundary-dark dark:text-white p-2 rounded-md cursor-pointer ${className}`} onClick={onClick}>{children}</button>
+    <button className={`bg-brand-color-secundary-light/90 dark:bg-brand-color-secundary-main/70 transition-colors hover:bg-brand-color-secundary-dark dark:hover:bg-brand-color-secundary-dark p-2 rounded-md cursor-pointer ${className}`} onClick={onClick}>{children}</button>
   )
 }
