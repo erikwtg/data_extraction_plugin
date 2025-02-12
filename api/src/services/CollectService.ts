@@ -19,4 +19,13 @@ export class CollectService extends BaseService<CollectEntity> implements IColle
       return { error: true, message: "Falha ao salvar coleta" }
     }
   }
+
+  async getByToken(token: string): Promise<CollectEntity[] | { error: boolean, message: string }> {
+    try {
+      return await this.collectRepository.getByToken(token)
+    } catch (error) {
+      console.log("Erro ao listar coleta: ", error)
+      return { error: true, message: "Falha ao listar coleta" }
+    }
+  }
 }

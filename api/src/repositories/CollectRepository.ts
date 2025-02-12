@@ -41,4 +41,18 @@ export class CollectRepository extends BaseRepository<CollectEntity> implements 
       return { error: true, message: "Falha ao criar no banco de dados." }
     }
   }
+
+  async getByToken(token: string): Promise<CollectEntity[]> {
+    const response = await db.ref(`${this.table}/${token}`)
+      .orderByChild('createdAt')
+      .limitToLast(20)
+      .get()
+
+    if (!response.exists()) {
+      console.log('Nao a resgistros')
+      return []
+    }
+
+    return response.val()
+  }
 }
