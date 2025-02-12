@@ -1,8 +1,15 @@
 import { Container } from './Container'
 import { Draggable } from './Draggable'
+import { ButtonExtract } from './ButtonExtract'
+import { Activation } from './Activation'
 
 export function PluginBox(): HTMLButtonElement | HTMLDivElement {
-  const container = Container({ gap: '10px', backgroundColor: 'red', borderRadius: '50%', width: '100px', height: '100px' })
+  const container = Container({ gap: '10px' })
+  const buttonExtract = ButtonExtract()
+  const activation = Activation()
+
+  container.appendChild(buttonExtract)
+  container.appendChild(activation)
 
   const draggable = Draggable({
     children: container,
