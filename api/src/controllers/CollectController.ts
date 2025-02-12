@@ -4,6 +4,8 @@ import { AuthFactory } from '../factories/AuthFactory'
 import { CollectEntity } from '../entities/CollectEntity'
 import { CollectFactory } from '../factories/CollectFactory'
 
+import { sanitizeJwtToken } from '../utils/authUtils'
+
 export class CollectController {
   static async create(req: Request, res: Response) {
     const domain = req.headers.host || req.body.origin
@@ -33,13 +35,16 @@ export class CollectController {
 
   static async getByToken(req: Request, res: Response) {
     const domain = req.headers.host || req.body.origin
-
+    const { token } = req.query
+  
     try {
       const authService = AuthFactory.getInstance()
       const tokenDomainData = await authService.getTokenByDomain(domain)
 
+      const useToken = sanitizeJwtToken(token as string) ?? tokenDomainData?.token
+
       const collectService = CollectFactory.getInstance()
-      const response = await collectService.getByToken(tokenDomainData.token)
+      const response = await collectService.getByToken(useToken)
 
       if ('error' in response) {
         res.status(400).json({ error: response?.message })
