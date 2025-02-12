@@ -1,8 +1,8 @@
+import { PluginBox } from './components/PluginBox'
+
 export function DataScrapperPlugin() {
-  const pluginBox = document.createElement('div')
-  pluginBox.innerHTML = `
-    <h1>Data Scrapper Plugin</h1>
-  `
+  const pluginBox = PluginBox()
+  console.log('DATA SCRAPPER PLUGIN')
   document.body.appendChild(pluginBox)
 }
 
