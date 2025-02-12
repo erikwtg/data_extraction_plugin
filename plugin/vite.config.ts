@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   build: {
     target: 'esnext',
+    cssCodeSplit: false,
     lib: {
       entry: './src/main.ts',
       name: 'DataScrapperPlugin',
@@ -11,5 +12,6 @@ export default defineConfig({
     rollupOptions: {
       external: [],
     },
+    minify: 'esbuild'
   },
 })
