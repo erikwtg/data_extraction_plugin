@@ -1,3 +1,3 @@
-import { IBaseRepository } from "./base/IBaseRepository"
-
-export interface ICollectRepository<T> extends IBaseRepository<T> {}
+export interface ICollectRepository<T> {
+    createCollect(item: T, token: string): Promise<T | { error: boolean, message: string }>
+}

@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 
 import { AuthFactory } from '../factories/AuthFactory'
+import { CollectEntity } from '../entities/CollectEntity'
+import { CollectFactory } from '../factories/CollectFactory'
 
 export class CollectController {
   static async create(req: Request, res: Response) {
@@ -10,9 +12,17 @@ export class CollectController {
       const authService = AuthFactory.getInstance()
       const tokenDomainData = await authService.getTokenByDomain(domain)
 
-      console.log(tokenDomainData)
+      const collectData = new CollectEntity(req.body)
+      const collectService = CollectFactory.getInstance()
 
-      res.status(201).json(tokenDomainData)
+      const response =  await collectService.createCollect(collectData, tokenDomainData?.token)
+
+      if ('error' in response) {
+        res.status(400).json({ error: response?.message })
+        return
+      }
+
+      res.status(201).json(collectData)
 
     } catch (error) {
       console.log(error)
