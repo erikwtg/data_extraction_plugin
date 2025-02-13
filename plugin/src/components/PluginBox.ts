@@ -26,6 +26,11 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
     buttonExtract.style.backgroundColor = bgColor
   }
 
+  function focusActivation() {
+    activation.style.display = 'block'
+    setTimeout(() => activation.focus(), 100)
+  }
+
   buttonExtract.addEventListener('click', async (): Promise<void> => {
     try {
       const extractor = new DataScrapper()
@@ -35,14 +40,13 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
         throw new Error('Não foi possível capturar dados!')
       }
 
-      console.log('TOKEN: ', data, token)
       const response = await SendToAPI(data as IApiData, config.apiEndpoint, token)
 
       if (('error' in response)) {
         updateButtonState('failed', response.message, '#FF4D4D')
 
         if (/token|invalid/i.test(response.message)) {
-          activation.style.display = 'block'
+          focusActivation()
         } else if (/limite/i.test(response.message)) {
           buttonExtract.style.backgroundColor = '#FCC002'
         }

@@ -28,6 +28,8 @@ export function Activation(): { container: HTMLDivElement, input: HTMLInputEleme
     const newToken = (event.target as HTMLInputElement).value.trim()
     if (newToken) {
       state.set('token', newToken)
+    } else {
+      state.remove('token')
     }
   })
 
