@@ -15,8 +15,6 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
   const buttonExtract = ButtonExtract()
   const { container: activation } = Activation()
 
-  let token = state.get('token') || null
-
   container.appendChild(buttonExtract)
   container.appendChild(activation)
 
@@ -40,7 +38,7 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
         throw new Error('Não foi possível capturar dados!')
       }
 
-      const response = await SendToAPI(data as IApiData, config.apiEndpoint, token)
+      const response = await SendToAPI(data as IApiData, config.apiEndpoint, state.get('token'))
 
       if (('error' in response)) {
         updateButtonState('failed', response.message, '#FF4D4D')
