@@ -9,9 +9,10 @@ services:
   api:
     <<: *shared-environment
     image: node:22.12.0
-    container_name: handtalk-extraction-plugin_api
+    container_name: api
     environment:
       NODE_ENV: development
+      API_ENDPOINT: http://api:3000/collect
     working_dir: /app
     volumes:
       - ./api:/app
@@ -23,7 +24,7 @@ services:
     <<: *shared-environment
     image: node:22.12.0
     working_dir: /app
-    container_name: handtalk-extraction-plugin_page
+    container_name: page
     command: ["sh", "-c", "npm install && npm run dev"]
     volumes:
       - ./page:/app/
@@ -35,15 +36,15 @@ services:
   plugin:
     <<: *shared-environment
     image: node:22.12.0
-    container_name: handtalk-extraction-plugin_plugin
+    container_name: plugin
     environment:
       NODE_ENV: development
     working_dir: /app
     volumes:
       - ./plugin:/app
-    command: ["sh", "-c", "npm install && npm run build && npm run dev"]
+    command: ["sh", "-c", "npm install && npm run build && node server.mjs"]
     ports:
-      - 3333:3333
+      - 4000:4000
 
 networks:
   handtalk_extraction_plugin_network:

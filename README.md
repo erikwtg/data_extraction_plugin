@@ -73,6 +73,36 @@ Construir os containers necessários.
 
 Rodar os serviços na porta configuradas no docker-compose.yml.
 
+### 4. Rodar o projeto manualmente
+
+#### API
+```bash
+cd api
+npm install
+npm run dev
+```
+
+#### Plugin - Obs O plugin gera uma build que fica na pasta /dist
+- Pode ser injetado no html da página através de um <script src="http://localhost:4000/plugin/data_scrapper_plugin.es.js"></script> na url.
+- Ou pode ser importado manualmente através de um <script src="./data_scrapper_plugin.es.js"></script> no html da página.
+
+```bash
+cd plugin
+npm install
+npm run build
+```
+
+#### Página
+```bash
+cd page
+npm install
+npm run dev
+```
+
+
+
+
+
 ### DESIGN PATTERNS E ARQUITETURA
 
 - **Template Method**: Utilizado para definir o esqueleto de algoritmos, permitindo que subclasses forneçam implementações específicas.
