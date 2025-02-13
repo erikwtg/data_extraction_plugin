@@ -1,3 +1,3 @@
 export const config = {
-  apiEndpoint: process.env.API_ENDPOINT,
+  apiEndpoint: 'http://localhost:3000/collect',
 }
