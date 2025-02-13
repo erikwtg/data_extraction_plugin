@@ -8,7 +8,7 @@ import { sanitizeJwtToken } from '../utils/authUtils'
 
 export class CollectController {
   static async create(req: Request, res: Response) {
-    const domain = req.headers.host || req.body.origin
+    const domain = req.body.origin
 
     try {
       const authService = AuthFactory.getInstance()
@@ -20,15 +20,15 @@ export class CollectController {
       const response =  await collectService.createCollect(collectData, tokenDomainData?.token)
 
       if ('error' in response) {
-        res.status(400).json({ error: response?.message })
+        res.status(400).json({ error: true, message:response?.message })
         return
       }
 
-      res.status(201).json(collectData)
+      res.status(201).json({ data: collectData })
 
     } catch (error) {
       console.log(error)
-      res.status(400).json({ error: 'Erro ao coletar dados' })
+      res.status(400).json({ error: true, message: 'Erro ao coletar dados' })
       return
     }
   }
@@ -47,14 +47,14 @@ export class CollectController {
       const response = await collectService.getByToken(useToken)
 
       if ('error' in response) {
-        res.status(400).json({ error: response?.message })
+        res.status(400).json({ error: true, message: response?.message })
         return
       }
 
       res.status(200).json(response)
     } catch (error) {
       console.log(error)
-      res.status(400).json({ error: 'Erro ao listar coleta' })
+      res.status(400).json({ error: true, message: 'Erro ao listar coleta' })
       return
     }
   }

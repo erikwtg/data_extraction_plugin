@@ -5,12 +5,17 @@ import { Activation } from './Activation'
 
 import { DataScrapper } from '../services/DataScrapper'
 
+import { SendToAPI, IApiData } from '../services/SendToApi'
+import { config } from '../config'
+
+import { state } from '../utils/StateManager'
+
 export function PluginBox(): HTMLButtonElement | HTMLDivElement {
   const container = Container({ gap: '10px' })
   const buttonExtract = ButtonExtract()
-  const activation = Activation()
+  const { container: activation } = Activation()
 
-  // let token = null
+  let token = state.get('token') || null
 
   container.appendChild(buttonExtract)
   container.appendChild(activation)
@@ -21,7 +26,12 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
     buttonExtract.style.backgroundColor = bgColor
   }
 
-  buttonExtract.addEventListener('click', async () => {
+  function focusActivation() {
+    activation.style.display = 'block'
+    setTimeout(() => activation.focus(), 100)
+  }
+
+  buttonExtract.addEventListener('click', async (): Promise<void> => {
     try {
       const extractor = new DataScrapper()
       const data = extractor.scrap()
@@ -30,18 +40,34 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
         throw new Error('Não foi possível capturar dados!')
       }
 
-      console.log('data', data)
+      const response = await SendToAPI(data as IApiData, config.apiEndpoint, token)
 
-      updateButtonState('error', 'Erro ao capturar dados!', '#FF0000')
-      activation.style.display = 'block'
-      // updateButtonState('success', 'Dados capturados com sucesso!', '#008000')
+      if (('error' in response)) {
+        updateButtonState('failed', response.message, '#FF4D4D')
+
+        if (/token|invalid/i.test(response.message)) {
+          focusActivation()
+        } else if (/limite/i.test(response.message)) {
+          buttonExtract.style.backgroundColor = '#FCC002'
+        }
+
+        return
+      }
+
+      if (response instanceof Error) {
+        updateButtonState('failed', response.message, '#FF4D4D')
+        return
+      }
+
+      updateButtonState('success', 'Nova captura', '#20C6AD')
+      activation.style.display = 'none'
     } catch (error) {
       console.error(error)
       updateButtonState('error', 'Erro ao capturar dados!', '#FF0000')
     }
   })
 
-  document.addEventListener('click', (event) => {
+  document.addEventListener('click', (event): void => {
     if (!buttonExtract.contains(event.target as Node) && !activation.contains(event.target as Node)) {
       updateButtonState('success', 'Capturar dados', '#FB8C01')
       activation.style.display = 'none'

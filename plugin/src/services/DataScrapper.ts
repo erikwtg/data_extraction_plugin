@@ -29,13 +29,11 @@ export class DataScrapper implements IDataScrapper {
   }
 
   private getDomain(): string {
-    console.log('RECUPERA DOMINIO DA PAGINA: ', window.location.host)
     return window.location.host
   }
 
   private getLocalData(): string {
     const themeClicks = localStorage.getItem('storedNumberOfClicksInThemeButton')
-
     return themeClicks || 'Nenhum dado local encontrado'
   }
 

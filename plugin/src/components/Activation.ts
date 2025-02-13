@@ -1,11 +1,9 @@
 import { Container } from './Container'
 import { Input } from './Input'
 
-// import { updateStoredConfig } from '../utils/localStorage'
-
-export function Activation(): HTMLDivElement {
+import { state } from '../utils/StateManager'
+export function Activation(): { container: HTMLDivElement, input: HTMLInputElement } {
   const container = Container()
-  // let tokenValue = ''
 
   const inputData = {
     placeholder: 'Insira o Token',
@@ -15,37 +13,25 @@ export function Activation(): HTMLDivElement {
     border: '1px solid #FF4D4D',
     borderRadius: '20px',
     backgroundColor: '#F5F5F5',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)'
   }
   const input = Input(inputData)
 
   container.appendChild(input)
 
-  // Atualiza a variável quando o usuário digita
-  input.addEventListener('change', (event: Event) => {
-    console.log('input', event)
-    // tokenValue = (event.target as HTMLInputElement).value.trim()
-    // console.log('Novo Token:', tokenValue)
+  const savedToken = state.get('token')
+  if (savedToken) input.value = savedToken
 
-    // Atualiza o localStorage
-    // updateStoredConfig({ token: tokenValue })
+  requestAnimationFrame(() => input.focus())
+
+  input.addEventListener('input', (event: Event) => {
+    const newToken = (event.target as HTMLInputElement).value.trim()
+    if (newToken) {
+      state.set('token', newToken)
+    } else {
+      state.remove('token')
+    }
   })
 
-  // input.addEventListener('input', (event: Event) => {
-  //   console.log('input', event)
-  //   // const token = (event.target as HTMLInputElement).value.trim()
-
-  //   // console.log('Token inserido:', token)
-
-  //   // if (token) {
-  //   //   console.log('Token inserido:', token)
-  //   //   updateStoredConfig({ token })
-  //   // } else {
-  //   //   alert('Por favor, insira um token válido!')
-  //   // }
-  // })
-
-  /** Todo[Erik] - Verificar a necessidade de lógica de ativação do plugin */
-
-  return container
+  return { container, input }
 }

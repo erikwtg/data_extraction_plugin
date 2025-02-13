@@ -6,7 +6,7 @@ import { AuthFactory } from '../factories/AuthFactory'
 
 export async function authMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const domain = req.headers.host || req.body.domain
+    const domain = req.body.origin
     const token = req.headers['authorization']?.split(' ')[1] || ''
 
     if (!domain) {
@@ -22,27 +22,31 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     if (!existActiveDomainToken) {
 
       if (!token) {
-        res.status(401).json({ error: 'Insira um token!'})
+        res.status(401).json({ error: true, message: 'Insira um token!'})
         return
       }
+
+      console.log('TOKEN: ', token)
 
       const existToken = await authService.verifyTokenExist(token)
       const isTokenUsed = existToken && 'token' in existToken
 
       if (isTokenUsed) {
-        res.status(400).json({ error: 'Token inválido!' })
+        res.status(400).json({ error: true, message: 'Token inválido!' })
         return
       }
 
-      const validateToken = await verifyJwtToken(token)
-      if ('error' in validateToken) {
-        res.status(400).json({ error: validateToken.message })
+      try {
+        await verifyJwtToken(token)
+      } catch (error) {
+        res.status(400).json({ error: true, message: 'Token inválido!' })
+        return
       }
 
       const response = await authService.saveTokenForDomain(domain, token)
 
       if (response && 'error' in response) {
-        res.status(400).json({ error: response.message })
+        res.status(400).json({ error: true, message: response.message })
         return
       }
 
@@ -52,6 +56,6 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     return next()
   } catch (error) {
     console.log("ERROR: ", error)
-    res.status(500).json({ error: 'Falha na autenticação' })
+    res.status(500).json({ error: true, message: 'Falha na autenticação' })
   }
 }
