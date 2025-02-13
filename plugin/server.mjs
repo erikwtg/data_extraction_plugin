@@ -1,40 +1,36 @@
-// Importando o express
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import cors from 'cors'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-// Criando uma instância do app Express
-const app = express();
-const port = 3333;
+const app = express()
+const port = 4000
 
-app.use(cors());
-app.use(express.json());
-// Servindo arquivos estáticos da pasta 'plugin'
-app.use('/plugin', express.static(path.join(__dirname, 'dist')));
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}))
 
-// Forçando o MIME Type correto para arquivos JS
+app.use(express.json())
+
+app.use('/plugin', express.static(path.join(__dirname, 'dist')))
+
 app.get('/plugin/:file', (req, res) => {
-    const filePath = path.join(__dirname, 'dist', req.params.file);
-    console.log(filePath);
-    res.type('application/javascript');
-    res.sendFile(filePath);
-});
+    const filePath = path.join(__dirname, 'dist', req.params.file)
+    console.log("\x1b[33mfilePath: \x1b[0m", filePath)
 
-app.post('/collect', (req, res) => {
-  const data = req.body;
-  console.log(data);
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
+    res.type('application/javascript')
+    res.sendFile(filePath)
+})
 
-  // res.status(400).json({ error: true, message: 'Token inválido' });
-  // res.status(400).json({ error: true, message: 'Limite excedido' });
-  res.status(200).json({ message: 'Dados coletados com sucesso!' });
-});
-
-// Inicia o servidor Express na porta 3000
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Servidor rodando em http://localhost:${port}`)
+})

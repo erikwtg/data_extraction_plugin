@@ -1,6 +1,11 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/plugin': 'http://plugin:4000'
+    }
+  },
   build: {
     target: 'esnext',
     cssCodeSplit: false,
