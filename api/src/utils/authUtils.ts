@@ -32,7 +32,7 @@ export async function verifyJwtToken(token: string): Promise<{} | { error: boole
     
     return verifyToken
   } catch (error) {
-    console.error('Erro ao verificar token:', error);
+    console.error('Erro ao verificar token:', error)
     return false;
   }
 }

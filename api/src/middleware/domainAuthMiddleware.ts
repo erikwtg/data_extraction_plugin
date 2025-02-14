@@ -26,8 +26,6 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
         return
       }
 
-      console.log('TOKEN: ', token)
-
       const existToken = await authService.verifyTokenExist(token)
       const isTokenUsed = existToken && 'token' in existToken
 
