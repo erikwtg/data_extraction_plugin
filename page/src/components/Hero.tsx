@@ -9,7 +9,6 @@ import {
   NotionLogo,
   Icon,
 } from '@phosphor-icons/react'
-import { useThemeContextProviderContext } from '../context/ThemeContext'
 import { Breadcumbs } from './Breadcumbs'
 
 type Item = {
@@ -49,8 +48,6 @@ const itemsDatabase: Item[] = [
 ]
 
 export function Hero(): JSX.Element {
-  const { acessibilityMode } = useThemeContextProviderContext()
-
   return (
     <div className='flex items-center justify-center h-content'>
       <div className='flex flex-col md:flex-row items-center justify-around max-h-min gap-y-20 lg:gap-y-0'>
@@ -59,7 +56,7 @@ export function Hero(): JSX.Element {
             <img src="src/assets/avatar.png" alt="Imagem de Erik W T Gonçalves" className='w-52 md:w-72 h-52 md:h-72 rounded-full' loading='lazy'/>
             <h1 className='text-2xl font-bold'>Erik W T Gonçalves</h1>
           </div>
-          <Button className={`${ acessibilityMode ? 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' : '' }`}>Entre em contato</Button>
+          <Button>Entre em contato</Button>
         </div>
 
         <>
