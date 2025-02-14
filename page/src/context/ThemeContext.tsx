@@ -39,6 +39,7 @@ export function ThemeContextProvider({ children }: { children: React.ReactNode }
     }
 
     localStorage.setItem("theme", theme);
+    localStorage.setItem("acessibilityMode", String(acessibilityMode));
     localStorage.setItem("themeSwitchCount", numberOfClicksInThemeButton.toString());
   }, [theme, numberOfClicksInThemeButton]);
 
