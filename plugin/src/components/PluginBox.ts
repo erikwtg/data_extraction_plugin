@@ -49,6 +49,12 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
 
         if (/token|invalid/i.test(response.message)) {
           focusEnable()
+
+          setTimeout(() => {
+            updateButtonState('success', 'Capturar dados', '#FB8C01')
+          }, 1500)
+
+          state.remove('token')
         } else if (/limite/i.test(response.message)) {
           buttonExtract.style.backgroundColor = '#FCC002'
         }

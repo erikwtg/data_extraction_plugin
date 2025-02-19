@@ -14,6 +14,11 @@ export class CollectController {
       const authService = AuthFactory.getInstance()
       const tokenDomainData = await authService.getTokenByDomain(domain)
 
+      if ('error' in tokenDomainData) {
+        res.status(400).json({ error: true, message: tokenDomainData.message })
+        return
+      }
+
       const collectData = new CollectEntity(req.body)
       const collectService = CollectFactory.getInstance()
 
@@ -40,6 +45,11 @@ export class CollectController {
     try {
       const authService = AuthFactory.getInstance()
       const tokenDomainData = await authService.getTokenByDomain(domain)
+
+      if ('error' in tokenDomainData) {
+        res.status(400).json({ error: true, message: tokenDomainData.message })
+        return
+      }
 
       const useToken = sanitizeJwtToken(token as string) ?? tokenDomainData?.token
 
