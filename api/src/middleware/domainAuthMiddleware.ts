@@ -35,16 +35,21 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
       }
 
       try {
-        await verifyJwtToken(token)
+        const isValidToken = await verifyJwtToken(token)
+
+        if ('error' in isValidToken) {
+          res.status(400).json({ error: true, message: isValidToken.message })
+          return
+        }
+
+        const response = await authService.saveTokenForDomain(domain, token)
+
+        if (response && 'error' in response) {
+          res.status(400).json({ error: true, message: response.message })
+          return
+        }
       } catch (error) {
         res.status(400).json({ error: true, message: 'Token inválido!' })
-        return
-      }
-
-      const response = await authService.saveTokenForDomain(domain, token)
-
-      if (response && 'error' in response) {
-        res.status(400).json({ error: true, message: response.message })
         return
       }
 
