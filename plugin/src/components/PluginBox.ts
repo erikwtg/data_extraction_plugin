@@ -13,7 +13,7 @@ import { state } from '../utils/StateManager'
 export function PluginBox(): HTMLButtonElement | HTMLDivElement {
   const container = Container({ gap: '10px' })
   const buttonExtract = ButtonExtract()
-  const { container: activation } = Activation()
+  const { container: activation, input: activationInput } = Activation()
 
   container.appendChild(buttonExtract)
   container.appendChild(activation)
@@ -24,9 +24,13 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
     buttonExtract.style.backgroundColor = bgColor
   }
 
-  function focusActivation() {
+  function focusEnable() {
     activation.style.display = 'block'
-    setTimeout(() => activation.focus(), 100)
+    setTimeout(() => { requestAnimationFrame(() => activationInput.focus()) }, 100)
+  }
+
+  function focusDisable() {
+    activation.style.display = 'none'
   }
 
   buttonExtract.addEventListener('click', async (): Promise<void> => {
@@ -44,7 +48,7 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
         updateButtonState('failed', response.message, '#FF4D4D')
 
         if (/token|invalid/i.test(response.message)) {
-          focusActivation()
+          focusEnable()
         } else if (/limite/i.test(response.message)) {
           buttonExtract.style.backgroundColor = '#FCC002'
         }
@@ -58,7 +62,13 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
       }
 
       updateButtonState('success', 'Nova captura', '#20C6AD')
-      activation.style.display = 'none'
+
+      setTimeout(() => {
+        updateButtonState('success', 'Capturar dados', '#FB8C01')
+      }, 1500)
+
+      focusDisable()
+      state.remove('token')
     } catch (error) {
       console.error(error)
       updateButtonState('error', 'Erro ao capturar dados!', '#FF0000')
@@ -68,7 +78,7 @@ export function PluginBox(): HTMLButtonElement | HTMLDivElement {
   document.addEventListener('click', (event): void => {
     if (!buttonExtract.contains(event.target as Node) && !activation.contains(event.target as Node)) {
       updateButtonState('success', 'Capturar dados', '#FB8C01')
-      activation.style.display = 'none'
+      focusDisable()
     }
   })
 

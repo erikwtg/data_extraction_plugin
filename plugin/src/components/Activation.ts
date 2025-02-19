@@ -2,8 +2,10 @@ import { Container } from './Container'
 import { Input } from './Input'
 
 import { state } from '../utils/StateManager'
+
 export function Activation(): { container: HTMLDivElement, input: HTMLInputElement } {
   const container = Container()
+  container.style.display = 'none'
 
   const inputData = {
     placeholder: 'Insira o Token',
@@ -18,11 +20,6 @@ export function Activation(): { container: HTMLDivElement, input: HTMLInputEleme
   const input = Input(inputData)
 
   container.appendChild(input)
-
-  const savedToken = state.get('token')
-  if (savedToken) input.value = savedToken
-
-  requestAnimationFrame(() => input.focus())
 
   input.addEventListener('input', (event: Event) => {
     const newToken = (event.target as HTMLInputElement).value.trim()

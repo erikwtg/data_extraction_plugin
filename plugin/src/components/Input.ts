@@ -19,6 +19,7 @@ export function Input(styles?: IInputProps): HTMLInputElement {
   input.spellcheck = false
   input.autocomplete = "off"
   input.tabIndex = 0
+  input.style.zIndex = '9999'
 
   if (styles?.placeholder) {
     input.placeholder = styles.placeholder
